@@ -7,5 +7,8 @@ module.exports = {
     },
     mongodb: {
         dbURI: 'mongodb://bensonyue:YueGp60208@ds245018.mlab.com:45018/nn-oauth-test'
+    },
+    session: {
+        cookieKey: 'thenetninjaisawesomeiguess'
     }
 };
