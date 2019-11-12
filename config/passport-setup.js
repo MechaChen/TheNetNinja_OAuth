@@ -10,14 +10,23 @@ passport.use(
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
     }, (accessToken, refreshToken, profile, done) => {
-        // passport callback function
-        new User({
-            username: profile.displayName,
-            googleId: profile.id
-        })
-        .save()
-        .then((newUser) => {
-            console.log(`new user created: ${newUser}`);
-        });
+        // check if user already exiest in our db
+        User.findOne({ googleId: profile.id })
+            .then((currentUser) => {
+                if (currentUser) {
+                    // already have the user
+                    console.log(`user is:${currentUser}`);
+                } else {
+                    // if note, create user in our db
+                    new User({
+                        username: profile.displayName,
+                        googleId: profile.id
+                    })
+                    .save()
+                    .then((newUser) => {
+                        console.log(`new user created: ${newUser}`);
+                    });
+                }
+            })
     })
 );
